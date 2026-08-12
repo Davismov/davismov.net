@@ -39,19 +39,19 @@
             background-color: #000000;
         }
 
-        /* STACK LAYER 1: Tiled Purple Sky Background (Top Section) */
+        /* STACK LAYER 1: Tiled Purple Sky Background */
         .stars-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 60%; /* Fills top half down to the water line */
+            height: 60%;
             background: var(--body-bg-image) repeat;
-            background-size: 65px 65px; /* Matches outer border tile scale */
+            background-size: 65px 65px;
             z-index: 1;
         }
 
-        /* STACK LAYER 2: Tiled Dithered Water Background (Bottom Section) */
+        /* STACK LAYER 2: Tiled Dithered Water Background */
         .water-bg {
             position: absolute;
             bottom: 0;
@@ -63,11 +63,12 @@
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Center Interactive Door */
+        /* STACK LAYER 3: Interactive Door (Behind Stone Wall) */
         .door-container {
             position: absolute;
             z-index: 3;
-            top: 45%; 
+            /* Shifted lower down so base sinks behind rocks */
+            top: 52%; 
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -76,8 +77,10 @@
 
         .door-container img {
             display: block;
-            height: 65vh;
+            /* Scaled up height forces door image wide enough to seal side gaps */
+            height: 78vh;
             width: auto;
+            min-height: 550px;
         }
 
         .door-container:hover {
