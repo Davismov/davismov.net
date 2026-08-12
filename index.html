@@ -37,21 +37,21 @@
         /* 1. DESKTOP STYLES (DEFAULT)                               */
         /* ========================================================= */
 
-        /* STACK LAYER 1: Base Tiled Sky with Occasional Shooting Star */
+        /* STACK LAYER 1: Base Tiled Sky */
         .stars-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 65%;
-            /* Base starfield background */
-            background-image: url('stars-dithered (1).gif');
+            /* Uses 'stars-dithered.gif' as base starry sky */
+            background-image: url('stars-dithered.gif');
             background-repeat: repeat;
             background-size: 65px 65px;
             z-index: 1;
         }
 
-        /* Shooting Star Overlay Layer */
+        /* Shooting Star Overlay (URL-encoded space fix: '%20') */
         .stars-bg::after {
             content: "";
             position: absolute;
@@ -59,22 +59,22 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('no shooting star-dithered.gif');
+            /* %20 handles spaces in file names safely on web servers */
+            background-image: url('no%20shooting%20star-dithered.gif');
             background-repeat: repeat;
-            background-size: 130px 130px; /* Scaled slightly larger for variation */
+            background-size: 130px 130px;
             opacity: 0;
-            /* Runs a 25-second animation loop where the shooting star flashes briefly */
-            animation: rareShootingStar 25s infinite ease-in-out;
+            animation: rareShootingStar 30s infinite ease-in-out;
             pointer-events: none;
         }
 
-        /* Keyframe to make the shooting star appear briefly once every 25 seconds */
+        /* Fades shooting star layer in briefly once every 30 seconds */
         @keyframes rareShootingStar {
-            0%, 92%, 100% {
-                opacity: 0; /* Invisible most of the time */
+            0%, 94%, 100% {
+                opacity: 0;
             }
-            95% {
-                opacity: 1; /* Quickly flashes visible */
+            97% {
+                opacity: 0.85;
             }
         }
 
@@ -251,7 +251,7 @@
 <body>
 
     <div id="viewport">
-        <!-- Background Stars with Rare Shooting Star Overlay -->
+        <!-- Background Stars -->
         <div class="stars-bg"></div>
 
         <!-- Solid Black Side Crop Masks -->
