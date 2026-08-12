@@ -24,7 +24,7 @@
             font-family: 'Times New Roman', serif;
         }
 
-        /* Centered viewport box */
+        /* Viewport Box */
         #viewport {
             position: relative;
             width: 100vw;
@@ -33,19 +33,51 @@
             background-color: #000000;
         }
 
-        /* STACK LAYER 1: Tiled Dithered Stars Background */
+        /* ========================================================= */
+        /* 1. DESKTOP STYLES (DEFAULT)                               */
+        /* ========================================================= */
+
+        /* STACK LAYER 1: Base Tiled Sky with Occasional Shooting Star */
         .stars-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 65%;
-            background: url('stars-dithered.gif') repeat;
+            /* Base starfield background */
+            background-image: url('stars-dithered (1).gif');
+            background-repeat: repeat;
             background-size: 65px 65px;
             z-index: 1;
         }
 
-        /* SOLID BLACK SIDE MASKS (Crops wall and leaves at borders) */
+        /* Shooting Star Overlay Layer */
+        .stars-bg::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('no shooting star-dithered.gif');
+            background-repeat: repeat;
+            background-size: 130px 130px; /* Scaled slightly larger for variation */
+            opacity: 0;
+            /* Runs a 25-second animation loop where the shooting star flashes briefly */
+            animation: rareShootingStar 25s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        /* Keyframe to make the shooting star appear briefly once every 25 seconds */
+        @keyframes rareShootingStar {
+            0%, 92%, 100% {
+                opacity: 0; /* Invisible most of the time */
+            }
+            95% {
+                opacity: 1; /* Quickly flashes visible */
+            }
+        }
+
         .side-mask-left {
             position: absolute;
             top: 0;
@@ -68,7 +100,6 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 1.5: Moon */
         .moon {
             position: absolute;
             top: 4vh;
@@ -79,7 +110,6 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 2: Water */
         .water-bg {
             position: absolute;
             top: 65%; 
@@ -91,7 +121,6 @@
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Main Stone Archway Frame */
         .wall-frame {
             position: absolute;
             top: 20%; 
@@ -105,7 +134,6 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 4: Center Interactive Door */
         .door-container {
             position: absolute;
             z-index: 4;
@@ -127,7 +155,6 @@
             transform: translate(-50%, -51%);
         }
 
-        /* STACK LAYER 5: Foreground Rocks */
         .foreground-rocks {
             position: absolute;
             top: 20%;
@@ -141,7 +168,6 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Left Leaf Cluster (Lowered 40%) */
         .leaf-left {
             position: absolute;
             bottom: -54vh; 
@@ -154,7 +180,6 @@
             transform: rotate(-15deg); 
         }
 
-        /* STACK LAYER 6: Right Leaf Cluster */
         .leaf-right {
             position: absolute;
             bottom: -12vh; 
@@ -167,56 +192,58 @@
             transform: scaleX(-1) rotate(25deg); 
         }
 
-        /* MOBILE / PHONE SPECIFIC STYLES */
-        @media (max-width: 768px) or (max-aspect-ratio: 1/1) {
+        /* ========================================================= */
+        /* 2. PHONE STYLES ONLY                                      */
+        /* ========================================================= */
+        @media (max-width: 768px) {
             #viewport {
-                height: auto;
-                aspect-ratio: 16 / 10;
-                max-height: 85vh;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .side-mask-left, 
             .side-mask-right {
-                width: 10vw;
+                width: 5vw;
             }
 
             .moon {
-                height: 12vh;
+                height: 10vh;
                 top: 2vh;
-                right: 22vw;
+                right: 15vw;
             }
 
             .wall-frame, 
             .foreground-rocks {
-                top: 20%;
-                height: 80vh;
+                top: 25%;
+                height: 60vh;
                 width: auto;
             }
 
             .door-container {
-                top: 55%;
+                top: 51%;
             }
 
             .door-container img {
-                height: 80vh;
+                height: 60vh;
                 width: auto;
             }
 
             .water-bg {
-                top: 65%;
+                top: 55%;
             }
 
             .leaf-left {
-                width: 55vw;
-                bottom: -32vh;
-                left: -8vw;
+                width: 60vw;
+                bottom: -28vh;
+                left: -12vw;
             }
 
             .leaf-right {
-                width: 52vw;
+                width: 55vw;
                 bottom: -8vh;
-                right: -6vw;
+                right: -10vw;
             }
         }
     </style>
@@ -224,17 +251,17 @@
 <body>
 
     <div id="viewport">
-        <!-- Tiled Stars Sky Background -->
+        <!-- Background Stars with Rare Shooting Star Overlay -->
         <div class="stars-bg"></div>
 
         <!-- Solid Black Side Crop Masks -->
         <div class="side-mask-left"></div>
         <div class="side-mask-right"></div>
 
-        <!-- Moon in sky -->
+        <!-- Moon -->
         <img src="moon-dithered.png" alt="Moon" class="moon">
 
-        <!-- Tiled Dithered Water -->
+        <!-- Water -->
         <div class="water-bg"></div>
 
         <!-- Main Stone Wall Frame -->
@@ -248,14 +275,14 @@
         <!-- Foreground Rocks Layer -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
 
-        <!-- Left Leaves (Lowered 40%) -->
+        <!-- Left Leaves -->
         <img src="leafs-dithered.png" alt="Left Leaves" class="leaf-left">
 
         <!-- Right Leaves -->
         <img src="leafs-dithered.png" alt="Right Leaves" class="leaf-right">
     </div>
 
-    <!-- Door Opening Sound Effect -->
+    <!-- Audio Effect -->
     <audio id="doorAudio" src="door-open.mp3" preload="auto"></audio>
 
     <script>
