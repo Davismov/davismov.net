@@ -77,11 +77,11 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 4: Center Interactive Door (Shifted UP 15%) */
+        /* STACK LAYER 4: Center Interactive Door (Lowered 8%, Scaled Down 5%) */
         .door-container {
             position: absolute;
             z-index: 4;
-            top: 42%; 
+            top: 50%; 
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -90,7 +90,7 @@
 
         .door-container img {
             display: block;
-            height: 91vh; 
+            height: 86.4vh; 
             width: auto;
         }
 
@@ -113,14 +113,14 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Duplicated Foreground Rocks (2x Scale, Anchored to Bottom) */
+        /* STACK LAYER 6: Duplicated Foreground Rocks (Lowered 40%) */
         .foreground-rocks-close {
             position: absolute;
-            bottom: -5vh; /* Anchored to the bottom of the viewport */
+            bottom: -45vh; 
             left: 50%;
             transform: translateX(-50%);
             width: auto;
-            height: 170vh; /* Exactly 2x the size of original 85vh rocks */
+            height: 170vh;
             max-width: 160vw;
             object-fit: contain;
             z-index: 6;
@@ -146,7 +146,7 @@
         <!-- Foreground Rocks Layer (Original Scale) -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
 
-        <!-- Foreground Rocks Layer (2x Scale Close-Up) -->
+        <!-- Foreground Rocks Layer (2x Scale Close-Up, Lowered 40%) -->
         <img src="rocks.png" alt="Close Foreground Rocks" class="foreground-rocks-close">
     </div>
 
