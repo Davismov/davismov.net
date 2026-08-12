@@ -63,12 +63,11 @@
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Interactive Door (Behind Stone Wall) */
+        /* STACK LAYER 3: Center Interactive Door */
         .door-container {
             position: absolute;
             z-index: 3;
-            /* Shifted lower down so base sinks behind rocks */
-            top: 52%; 
+            top: 45%; 
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -77,10 +76,8 @@
 
         .door-container img {
             display: block;
-            /* Scaled up height forces door image wide enough to seal side gaps */
-            height: 78vh;
+            height: 65vh;
             width: auto;
-            min-height: 550px;
         }
 
         .door-container:hover {
@@ -88,7 +85,7 @@
             transform: translate(-50%, -51%);
         }
 
-        /* STACK LAYER 4: Main Stone Archway Frame (Masking layer) */
+        /* STACK LAYER 4: Main Stone Archway Frame */
         .wall-frame {
             position: absolute;
             top: 0;
