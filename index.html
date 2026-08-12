@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>davismov.net</title>
-    <style>
+<style>
         :root {
             --body-bg-image: url('https://sadhost.neocities.org/images/tiles/purplesky.gif');
         }
@@ -28,7 +22,7 @@
             font-family: 'Times New Roman', serif;
         }
 
-        /* Centered viewport box that frames the door doorway scene */
+        /* Centered viewport box */
         #viewport {
             position: relative;
             width: 100vw;
@@ -78,22 +72,25 @@
         .door-container {
             position: absolute;
             z-index: 4;
-            top: 50%;
+            /* Positioning relative to the archway cutout */
+            top: 46%; 
             left: 50%;
-            transform: translate(-50%, -45%);
+            transform: translate(-50%, -50%);
             cursor: pointer;
             transition: transform 0.2s ease, filter 0.3s ease;
         }
 
         .door-container img {
             display: block;
-            max-height: 60vh;
-            max-width: 90vw;
+            /* Increased size so the door fills the stone cutout gap */
+            height: 68vh;
+            width: auto;
+            max-height: 750px;
         }
 
         .door-container:hover {
             filter: drop-shadow(0 0 15px #8a2be2) brightness(1.15);
-            transform: translate(-50%, -47%);
+            transform: translate(-50%, -52%);
         }
 
         /* STACK LAYER 5: Foreground Rocks */
@@ -108,43 +105,3 @@
             pointer-events: none;
         }
     </style>
-</head>
-<body>
-
-    <div id="viewport">
-        <!-- Animated Backgrounds -->
-        <div class="stars-bg"></div>
-        <div class="water-bg"></div>
-
-        <!-- Main Stone Wall Frame -->
-        <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
-
-        <!-- Interactive Center Door -->
-        <div class="door-container" onclick="enterDoor('davis.html')">
-            <img src="Door-Davis.png" alt="Davis.mov Entryway">
-        </div>
-
-        <!-- Foreground Rocks Layer -->
-        <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
-    </div>
-
-    <!-- Door Opening Sound Effect -->
-    <audio id="doorAudio" src="door-open.mp3" preload="auto"></audio>
-
-    <script>
-        function enterDoor(destination) {
-            var audio = document.getElementById("doorAudio");
-            
-            if (audio) {
-                audio.currentTime = 0;
-                audio.play().catch(function(e) { /* Audio fallback */ });
-            }
-
-            setTimeout(function() {
-                window.location.href = destination;
-            }, 600);
-        }
-    </script>
-
-</body>
-</html>
