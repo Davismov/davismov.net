@@ -1,4 +1,12 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>davismov.net</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <style>
         :root {
             --body-bg-image: url('https://sadhost.neocities.org/images/tiles/purplesky.gif');
         }
@@ -27,8 +35,6 @@
             position: relative;
             width: 100vw;
             height: 100vh;
-            max-width: 1920px;
-            max-height: 1080px;
             overflow: hidden;
             background-color: #000000;
         }
@@ -72,8 +78,8 @@
         .door-container {
             position: absolute;
             z-index: 4;
-            /* Positioning relative to the archway cutout */
-            top: 46%; 
+            /* Adjust top % if you want to move the door higher or lower */
+            top: 42%; 
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -82,10 +88,10 @@
 
         .door-container img {
             display: block;
-            /* Increased size so the door fills the stone cutout gap */
-            height: 68vh;
+            height: 72%;
             width: auto;
-            max-height: 750px;
+            max-height: 700px;
+            min-height: 350px;
         }
 
         .door-container:hover {
@@ -105,3 +111,43 @@
             pointer-events: none;
         }
     </style>
+</head>
+<body>
+
+    <div id="viewport">
+        <!-- Animated Backgrounds -->
+        <div class="stars-bg"></div>
+        <div class="water-bg"></div>
+
+        <!-- Main Stone Wall Frame -->
+        <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
+
+        <!-- Interactive Center Door -->
+        <div class="door-container" onclick="enterDoor('davis.html')">
+            <img src="Door-Davis.png" alt="Davis.mov Entryway">
+        </div>
+
+        <!-- Foreground Rocks Layer -->
+        <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
+    </div>
+
+    <!-- Door Opening Sound Effect -->
+    <audio id="doorAudio" src="door-open.mp3" preload="auto"></audio>
+
+    <script>
+        function enterDoor(destination) {
+            var audio = document.getElementById("doorAudio");
+            
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(function(e) { /* Audio fallback */ });
+            }
+
+            setTimeout(function() {
+                window.location.href = destination;
+            }, 600);
+        }
+    </script>
+
+</body>
+</html>
