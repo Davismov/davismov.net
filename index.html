@@ -140,32 +140,32 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Left Leaf Cluster (Anchored to Bottom-Left Corner A7-B10) */
+        /* STACK LAYER 6: Left Leaf Cluster (Scaled UP 30%) */
         .leaf-left {
             position: absolute;
-            bottom: -10vh; /* Pushes base down so top edges sit right around Row 7 */
+            bottom: -10vh; 
             left: -2vw;
-            width: 28vw;
+            width: 36.4vw;
             height: auto;
             object-fit: contain;
             z-index: 6;
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Right Leaf Cluster (Anchored to Bottom-Right Corner I7-J10) */
+        /* STACK LAYER 6: Right Leaf Cluster (Scaled UP 30%) */
         .leaf-right {
             position: absolute;
-            bottom: -10vh; /* Pushes base down so top edges sit right around Row 7 */
+            bottom: -10vh; 
             right: -2vw;
-            width: 28vw;
+            width: 36.4vw;
             height: auto;
             object-fit: contain;
             z-index: 6;
             pointer-events: none;
-            transform: scaleX(-1); /* Mirrored */
+            transform: scaleX(-1);
         }
 
-        /* MOBILE FIX */
+        /* MOBILE / PHONE SPECIFIC STYLES */
         @media (max-width: 768px) or (max-aspect-ratio: 1/1) {
             .wall-frame, 
             .foreground-rocks {
@@ -173,13 +173,18 @@
                 height: auto;
             }
 
+            /* Door scaled up 50% for phone view (48vw -> 72vw) */
             .door-container img {
-                width: 48vw;
+                width: 72vw;
                 height: auto;
             }
 
+            .door-container {
+                top: 50%;
+            }
+
             .leaf-left, .leaf-right {
-                width: 40vw;
+                width: 48vw;
                 bottom: -5vh;
             }
         }
@@ -205,10 +210,10 @@
         <!-- Foreground Rocks Layer -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
 
-        <!-- Left Leaves (Red Box Target: Bottom-Left A7-B10) -->
+        <!-- Left Leaves (Scaled UP 30%) -->
         <img src="leafs-dithered.png" alt="Left Leaves" class="leaf-left">
 
-        <!-- Right Leaves (Red Box Target: Bottom-Right I7-J10) -->
+        <!-- Right Leaves (Scaled UP 30%) -->
         <img src="leafs-dithered.png" alt="Right Leaves" class="leaf-right">
     </div>
 
