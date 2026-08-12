@@ -50,19 +50,42 @@
             z-index: 1;
         }
 
-        /* STACK LAYER 2: Tiled Water Background */
+        /* STACK LAYER 2: Tiled Dithered Water Background */
         .water-bg {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
             height: 50%;
-            background: url('waterslow.gif') repeat;
+            background: url('water-dithered.gif') repeat;
             background-size: 64px 64px; 
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Main Stone Archway Frame */
+        /* STACK LAYER 3: Interactive Door (Behind Stone Wall) */
+        .door-container {
+            position: absolute;
+            z-index: 3;
+            top: 48%; 
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.3s ease;
+        }
+
+        .door-container img {
+            display: block;
+            width: 32vw;
+            min-width: 420px;
+            height: auto;
+        }
+
+        .door-container:hover {
+            filter: drop-shadow(0 0 20px #8a2be2) brightness(1.2);
+            transform: translate(-50%, -51%);
+        }
+
+        /* STACK LAYER 4: Main Stone Archway Frame (Masks Door Edges) */
         .wall-frame {
             position: absolute;
             top: 0;
@@ -70,34 +93,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: 3;
-            pointer-events: none;
-        }
-
-        /* STACK LAYER 4: Center Interactive Door */
-        .door-container {
-            position: absolute;
             z-index: 4;
-            /* Lowered top position so top edge doesn't peek over the stone header */
-            top: 50%; 
-            left: 50%;
-            transform: translate(-50%, -46%);
-            cursor: pointer;
-            transition: transform 0.2s ease, filter 0.3s ease;
-        }
-
-        .door-container img {
-            display: block;
-            /* Scaled up height to fill out the width/sides of the cutout */
-            height: 82vh;
-            width: auto;
-            max-height: 850px;
-            min-height: 480px;
-        }
-
-        .door-container:hover {
-            filter: drop-shadow(0 0 15px #8a2be2) brightness(1.15);
-            transform: translate(-50%, -48%);
+            pointer-events: none;
         }
 
         /* STACK LAYER 5: Foreground Rocks */
@@ -120,13 +117,13 @@
         <div class="stars-bg"></div>
         <div class="water-bg"></div>
 
-        <!-- Main Stone Wall Frame -->
-        <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
-
-        <!-- Interactive Center Door -->
+        <!-- Interactive Center Door (Behind Wall) -->
         <div class="door-container" onclick="enterDoor('davis.html')">
             <img src="Door-Davis.png" alt="Davis.mov Entryway">
         </div>
+
+        <!-- Main Stone Wall Frame (Masking layer) -->
+        <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
 
         <!-- Foreground Rocks Layer -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
