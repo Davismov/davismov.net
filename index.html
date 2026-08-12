@@ -62,27 +62,29 @@
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Interactive Door (Behind Stone Wall) */
+        /* STACK LAYER 3: Interactive Door (Locked to full viewport aspect ratio) */
         .door-container {
             position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 3;
-            top: 48%; 
-            left: 50%;
-            transform: translate(-50%, -50%);
             cursor: pointer;
-            transition: transform 0.2s ease, filter 0.3s ease;
+            transition: filter 0.3s ease, transform 0.2s ease;
         }
 
         .door-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            width: 32vw;
-            min-width: 420px;
-            height: auto;
         }
 
+        /* Hover effect: Subtle purple glow and slight lift */
         .door-container:hover {
             filter: drop-shadow(0 0 20px #8a2be2) brightness(1.2);
-            transform: translate(-50%, -51%);
+            transform: translateY(-4px);
         }
 
         /* STACK LAYER 4: Main Stone Archway Frame (Masks Door Edges) */
@@ -94,7 +96,7 @@
             height: 100%;
             object-fit: cover;
             z-index: 4;
-            pointer-events: none;
+            pointer-events: none; /* Mouse clicks pass through stone frame to the door */
         }
 
         /* STACK LAYER 5: Foreground Rocks */
@@ -117,12 +119,12 @@
         <div class="stars-bg"></div>
         <div class="water-bg"></div>
 
-        <!-- Interactive Center Door (Behind Wall) -->
+        <!-- Interactive Center Door (Behind Wall, matched to 100% overlay) -->
         <div class="door-container" onclick="enterDoor('davis.html')">
             <img src="Door-Davis.png" alt="Davis.mov Entryway">
         </div>
 
-        <!-- Main Stone Wall Frame (Masking layer) -->
+        <!-- Main Stone Wall Frame -->
         <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
 
         <!-- Foreground Rocks Layer -->
