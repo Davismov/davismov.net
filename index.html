@@ -7,10 +7,6 @@
     <link rel="icon" type="image/png" href="favicon.png">
 
     <style>
-        :root {
-            --body-bg-image: url('https://sadhost.neocities.org/images/tiles/purplesky.gif');
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -21,9 +17,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #000000;
-            background-image: var(--body-bg-image);
-            background-size: 65px;
+            background-color: #000000; /* Solid Black Background (Sky Removed) */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -39,9 +33,9 @@
             background-color: #000000;
         }
 
-        /* BATTLESHIP GRID OVERLAY (A-J / 1-10) */
-        #viewport::after {
-            content: "A1 B1 C1 D1 E1 F1 G1 H1 I1 J1";
+        /* FIXED BATTLESHIP GRID OVERLAY (Labels spaced cleanly A-J across 10 columns) */
+        #viewport::before {
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
@@ -50,61 +44,60 @@
             z-index: 9999;
             pointer-events: none;
             background-image: 
-                linear-gradient(to right, rgba(255, 0, 0, 0.45) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 0, 0, 0.45) 1px, transparent 1px);
+                linear-gradient(to right, rgba(255, 0, 0, 0.5) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 0, 0, 0.5) 1px, transparent 1px);
             background-size: 10% 10%;
+            box-shadow: inset 0 0 0 2px rgba(255, 0, 0, 0.8);
+        }
+
+        #viewport::after {
+            content: "A  \00a0\00a0 B  \00a0\00a0 C  \00a0\00a0 D  \00a0\00a0 E  \00a0\00a0 F  \00a0\00a0 G  \00a0\00a0 H  \00a0\00a0 I  \00a0\00a0 J";
+            position: absolute;
+            top: 5px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
             color: #00ff00;
             font-family: monospace;
             font-weight: bold;
-            font-size: 14px;
-            padding: 4px;
-            letter-spacing: 2vw;
-            box-shadow: inset 0 0 0 2px rgba(255, 0, 0, 0.6);
+            font-size: 16px;
+            z-index: 10000;
+            pointer-events: none;
+            text-shadow: 1px 1px 2px #000;
         }
 
-        /* STACK LAYER 1: Tiled Purple Sky Background */
-        .stars-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 60%;
-            background: var(--body-bg-image) repeat;
-            background-size: 65px 65px;
-            z-index: 1;
-        }
-
-        /* STACK LAYER 2: Moon (Top Right Corner) */
+        /* STACK LAYER 1: Moon (Top Right Corner) */
         .moon {
             position: absolute;
             top: 4vh;
             right: 4vw;
             width: auto;
             height: 18vh;
-            z-index: 2;
+            z-index: 1;
             pointer-events: none;
         }
 
-        /* STACK LAYER 2.5: Tiled Dithered Water Background */
+        /* STACK LAYER 2: Water (Starts row 7 down to bottom row 10) */
         .water-bg {
             position: absolute;
+            top: 60%; /* Row 7 start */
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 50%;
             background: url('water-dithered.gif') repeat;
             background-size: 64px 64px; 
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Main Stone Archway Frame */
+        /* STACK LAYER 3: Main Stone Archway Frame (B3 to B10 -> Top 20% to 100%) */
         .wall-frame {
             position: absolute;
-            top: 50%;
+            top: 20%; /* Shifted down to start at Row 3 */
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             width: auto;
-            height: 85vh;
+            height: 80vh; /* Spans from Row 3 to Row 10 */
             max-width: 100vw;
             object-fit: contain;
             z-index: 3;
@@ -115,7 +108,7 @@
         .door-container {
             position: absolute;
             z-index: 4;
-            top: 50%; 
+            top: 55%; 
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -124,7 +117,7 @@
 
         .door-container img {
             display: block;
-            height: 86.4vh; 
+            height: 80vh; 
             width: auto;
         }
 
@@ -133,41 +126,51 @@
             transform: translate(-50%, -51%);
         }
 
-        /* STACK LAYER 5: Original Foreground Rocks (Restored) */
+        /* STACK LAYER 5: Original Foreground Rocks */
         .foreground-rocks {
             position: absolute;
-            top: 50%;
+            top: 20%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             width: auto;
-            height: 85vh;
+            height: 80vh;
             max-width: 100vw;
             object-fit: contain;
             z-index: 5;
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Foreground Leaves (Lowered Massively) */
-        .foreground-leaves-close {
+        /* STACK LAYER 6: Left Leaf Cluster (Positioned at Column A, Row 7) */
+        .leaf-left {
             position: absolute;
-            bottom: -68vh; /* Lowered down so only top tips peek over row 8/9 */
-            left: 50%;
-            transform: translateX(-50%);
-            width: auto;
-            height: 110vh; /* Reduced height to stop full-screen coverage */
-            max-width: 140vw;
+            top: 60%; /* Starts at Row 7 */
+            left: 0;  /* Column A */
+            width: 20vw;
+            height: auto;
             object-fit: contain;
             z-index: 6;
             pointer-events: none;
         }
 
-        /* MOBILE / NARROW SCREEN FIX */
+        /* STACK LAYER 6: Right Leaf Cluster (Positioned at Column J, Row 7) */
+        .leaf-right {
+            position: absolute;
+            top: 60%;  /* Starts at Row 7 */
+            right: 0;  /* Column J */
+            width: 20vw;
+            height: auto;
+            object-fit: contain;
+            z-index: 6;
+            pointer-events: none;
+            transform: scaleX(-1); /* Flips asset so it mirrors nicely on right side */
+        }
+
+        /* MOBILE FIX */
         @media (max-width: 768px) or (max-aspect-ratio: 1/1) {
             .wall-frame, 
             .foreground-rocks {
                 width: 100vw;
                 height: auto;
-                max-width: none;
             }
 
             .door-container img {
@@ -175,21 +178,8 @@
                 height: auto;
             }
 
-            .door-container {
-                top: 48%;
-            }
-
-            .foreground-leaves-close {
-                width: 120vw;
-                height: auto;
-                bottom: -22vh;
-                max-width: none;
-            }
-
-            .moon {
-                height: 12vh;
-                top: 2vh;
-                right: 3vw;
+            .leaf-left, .leaf-right {
+                width: 35vw;
             }
         }
     </style>
@@ -197,12 +187,13 @@
 <body>
 
     <div id="viewport">
-        <!-- Animated Backgrounds & Moon -->
-        <div class="stars-bg"></div>
+        <!-- Moon in sky -->
         <img src="moon-dithered.png" alt="Moon" class="moon">
+
+        <!-- Tiled Dithered Water (Starts Row 7) -->
         <div class="water-bg"></div>
 
-        <!-- Main Stone Wall Frame -->
+        <!-- Main Stone Wall Frame (Starts Row 3) -->
         <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
 
         <!-- Interactive Center Door -->
@@ -210,11 +201,14 @@
             <img src="Door-Davis.png" alt="Davis.mov Entryway">
         </div>
 
-        <!-- Foreground Rocks Layer (Original Placement) -->
+        <!-- Foreground Rocks Layer -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
 
-        <!-- Foreground Leaves Layer (Peeking at the bottom) -->
-        <img src="leafs-dithered.png" alt="Peeking Leaves" class="foreground-leaves-close">
+        <!-- Left Leaves (A7) -->
+        <img src="leafs-dithered.png" alt="Left Leaves" class="leaf-left">
+
+        <!-- Right Leaves (J7) -->
+        <img src="leafs-dithered.png" alt="Right Leaves" class="leaf-right">
     </div>
 
     <!-- Door Opening Sound Effect -->
