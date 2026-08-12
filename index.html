@@ -51,7 +51,18 @@
             z-index: 1;
         }
 
-        /* STACK LAYER 2: Tiled Dithered Water Background */
+        /* STACK LAYER 2: Moon (Top Right Corner) */
+        .moon {
+            position: absolute;
+            top: 4vh;
+            right: 4vw;
+            width: auto;
+            height: 18vh;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* STACK LAYER 2.5: Tiled Dithered Water Background */
         .water-bg {
             position: absolute;
             bottom: 0;
@@ -99,8 +110,8 @@
             transform: translate(-50%, -51%);
         }
 
-        /* STACK LAYER 5: Original Foreground Rocks */
-        .foreground-rocks {
+        /* STACK LAYER 5: Foreground Leaves (Original Scale) */
+        .foreground-leaves {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -113,8 +124,8 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Duplicated Foreground Rocks (Shifted UP 10%) */
-        .foreground-rocks-close {
+        /* STACK LAYER 6: Foreground Leaves (Close-Up Scale) */
+        .foreground-leaves-close {
             position: absolute;
             bottom: -35vh; 
             left: 50%;
@@ -126,13 +137,46 @@
             z-index: 6;
             pointer-events: none;
         }
+
+        /* MOBILE / NARROW SCREEN FIX */
+        @media (max-width: 768px) or (max-aspect-ratio: 1/1) {
+            .wall-frame, 
+            .foreground-leaves {
+                width: 100vw;
+                height: auto;
+                max-width: none;
+            }
+
+            .door-container img {
+                width: 48vw;
+                height: auto;
+            }
+
+            .door-container {
+                top: 48%;
+            }
+
+            .foreground-leaves-close {
+                width: 130vw;
+                height: auto;
+                bottom: -8vh;
+                max-width: none;
+            }
+
+            .moon {
+                height: 12vh;
+                top: 2vh;
+                right: 3vw;
+            }
+        }
     </style>
 </head>
 <body>
 
     <div id="viewport">
-        <!-- Animated Backgrounds -->
+        <!-- Animated Backgrounds & Moon -->
         <div class="stars-bg"></div>
+        <img src="moon-dithered.png" alt="Moon" class="moon">
         <div class="water-bg"></div>
 
         <!-- Main Stone Wall Frame (Behind Door) -->
@@ -143,11 +187,11 @@
             <img src="Door-Davis.png" alt="Davis.mov Entryway">
         </div>
 
-        <!-- Foreground Rocks Layer (Original Scale) -->
-        <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
+        <!-- Foreground Leaves Layer (Original Scale) -->
+        <img src="leafs-dithered.png" alt="Foreground Leaves" class="foreground-leaves">
 
-        <!-- Foreground Rocks Layer (2x Scale Close-Up, Raised 10%) -->
-        <img src="rocks.png" alt="Close Foreground Rocks" class="foreground-rocks-close">
+        <!-- Foreground Leaves Layer (Close-Up) -->
+        <img src="leafs-dithered.png" alt="Close Foreground Leaves" class="foreground-leaves-close">
     </div>
 
     <!-- Door Opening Sound Effect -->
