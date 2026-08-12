@@ -63,11 +63,26 @@
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Center Interactive Door */
+        /* STACK LAYER 3: Main Stone Archway Frame (Now Behind Door) */
+        .wall-frame {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: auto;
+            height: 85vh;
+            max-width: 100vw;
+            object-fit: contain;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* STACK LAYER 4: Center Interactive Door (In Front of Wall, Behind Rocks) */
         .door-container {
             position: absolute;
-            z-index: 3;
-            top: 48%; 
+            z-index: 4;
+            /* Shifted lower down to anchor base behind rocks */
+            top: 54%; 
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -76,7 +91,8 @@
 
         .door-container img {
             display: block;
-            height: 60vh; /* Fixed height anchor for door */
+            /* Scaled UP to fill out the side gaps */
+            height: 73vh; 
             width: auto;
         }
 
@@ -85,29 +101,14 @@
             transform: translate(-50%, -51%);
         }
 
-        /* STACK LAYER 4: Main Stone Archway Frame */
-        /* Using object-fit: contain stops the wall from stretching massively */
-        .wall-frame {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: auto;
-            height: 85vh; /* Scale wall relative to screen height to match door size */
-            max-width: 100vw;
-            object-fit: contain;
-            z-index: 4;
-            pointer-events: none;
-        }
-
-        /* STACK LAYER 5: Foreground Rocks */
+        /* STACK LAYER 5: Foreground Rocks (In Front of Door) */
         .foreground-rocks {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: auto;
-            height: 85vh; /* Matched identically to wall scale */
+            height: 85vh;
             max-width: 100vw;
             object-fit: contain;
             z-index: 5;
@@ -122,15 +123,15 @@
         <div class="stars-bg"></div>
         <div class="water-bg"></div>
 
-        <!-- Interactive Center Door (Behind Wall) -->
+        <!-- Main Stone Wall Frame (Behind Door) -->
+        <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
+
+        <!-- Interactive Center Door (In Front of Wall, Behind Rocks) -->
         <div class="door-container" onclick="enterDoor('davis.html')">
             <img src="Door-Davis.png" alt="Davis.mov Entryway">
         </div>
 
-        <!-- Main Stone Wall Frame (Scaled down to fit door) -->
-        <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
-
-        <!-- Foreground Rocks Layer (Scaled down to fit door) -->
+        <!-- Foreground Rocks Layer (In Front of Everything) -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
     </div>
 
