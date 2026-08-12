@@ -5,235 +5,146 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>davismov.net</title>
     <style>
-        /* user styles */
         :root {
-            --header-image: url('https://sadhost.neocities.org/images/layouts/wp.jpeg');
             --body-bg-image: url('https://sadhost.neocities.org/images/tiles/purplesky.gif');
-
-            /* colors */
-            --content: #43256E;
-        }
-
-        @font-face {
-            font-family: Nunito;
-            src: url('https://sadhost.neocities.org/fonts/Nunito-Regular.ttf');
-        }
-
-        @font-face {
-            font-family: Nunito;
-            src: url('https://sadhost.neocities.org/fonts/Nunito-Bold.ttf');
-            font-weight: bold;
-        }
-
-        @font-face {
-            font-family: Nunito;
-            src: url('https://sadhost.neocities.org/fonts/Nunito-Italic.ttf');
-            font-style: italic;
-        }
-
-        @font-face {
-            font-family: Nunito;
-            src: url('https://sadhost.neocities.org/fonts/Nunito-BoldItalic.ttf');
-            font-style: italic;
-            font-weight: bold;
-        }
-
-        body {
-            font-family: 'Nunito', sans-serif;
-            margin: 0;
-            background-color: #08031A;
-            background-size: 65px;
-            color: #fceaff;
-            background-image: var(--body-bg-image);
         }
 
         * {
             box-sizing: border-box;
-        }
-
-        #container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        #container a {
-            color: #ED64F5;
-            font-weight: bold;
-        }
-
-        #header {
-            width: 100%;
-            background-color: #5e4e8c;
-            height: 150px;
-            background-image: var(--header-image);
-            background-size: 100%;
-        }
-
-        #navbar {
-            height: 40px;
-            background-color: #13092D;
-            width: 100%;
-        }
-
-        #navbar ul {
-            display: flex;
-            padding: 0;
             margin: 0;
-            list-style-type: none;
-            justify-content: space-evenly;
+            padding: 0;
         }
 
-        #navbar li {
-            padding-top: 10px;
-        }
-
-        #navbar li a {
-            color: #ED64F5;
-            font-weight: 800;
-            text-decoration: none;
-        }
-
-        #navbar li a:hover {
-            color: #a49cba;
-            text-decoration: underline;
-        }
-
-        #flex {
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000000;
+            background-image: var(--body-bg-image);
+            background-size: 65px;
             display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Times New Roman', serif;
         }
 
-        aside {
-            background-color: #241445;
-            width: 200px;
-            padding: 20px;
-            font-size: smaller;
+        /* Centered viewport box that frames the door doorway scene */
+        #viewport {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            max-width: 1920px;
+            max-height: 1080px;
+            overflow: hidden;
+            background-color: #000000;
         }
 
-        main {
-            background-color: #43256E;
-            flex: 1;
-            padding: 20px;
-            order: 2;
-        }
-
-        #leftSidebar {
-            order: 1;
-        }
-
-        #rightSidebar {
-            order: 3;
-        }
-
-        footer {
-            background-color: #13092D;
+        /* STACK LAYER 1: Stars Sky Background */
+        .stars-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 40px;
-            padding: 10px;
-            text-align: center;
+            height: 70%;
+            background: url('stars.gif') repeat;
+            z-index: 1;
         }
 
-        h1, h2, h3 {
-            color: #ED64F5;
-        }
-
-        h1 {
-            font-size: 25px;
-        }
-
-        strong {
-            color: #ED64F5;
-        }
-
-        .box {
-            background-color: #4863A0;
-            border: 1px solid #2F539B;
-            padding: 20px;
-        }
-
-        #topBar {
+        /* STACK LAYER 2: Shimmering Horizon Water */
+        .water-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            height: 30px;
-            padding: 10px;
-            font-size: smaller;
-            background-color: #2E5090;
+            height: 45%;
+            background: url('water.gif') repeat-x;
+            background-size: cover;
+            z-index: 2;
         }
 
-        @media only screen and (max-width: 800px) {
-            #flex {
-                flex-wrap: wrap;
-            }
+        /* STACK LAYER 3: Main Stone Archway Frame */
+        .wall-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 3;
+            pointer-events: none;
+        }
 
-            aside {
-                width: 100%;
-            }
+        /* STACK LAYER 4: Center Interactive Door */
+        .door-container {
+            position: absolute;
+            z-index: 4;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -45%);
+            cursor: pointer;
+            transition: transform 0.2s ease, filter 0.3s ease;
+        }
 
-            main {
-                order: 1;
-            }
+        .door-container img {
+            display: block;
+            max-height: 60vh;
+            max-width: 90vw;
+        }
 
-            #leftSidebar {
-                order: 2;
-            }
+        .door-container:hover {
+            filter: drop-shadow(0 0 15px #8a2be2) brightness(1.15);
+            transform: translate(-50%, -47%);
+        }
 
-            #rightSidebar {
-                order: 3;
-            }
-
-            #navbar ul {
-                flex-wrap: wrap;
-            }
+        /* STACK LAYER 5: Foreground Rocks */
+        .foreground-rocks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 5;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <div id="container">
-        <div id="topBar">Value in the process, Value in the Process, Prossessing the Value..!</div>
-        <div id="headerArea">
-            <div id="header"></div>
-            <nav id="navbar">
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                </ul>
-            </nav>
+    <div id="viewport">
+        <!-- Animated Backgrounds -->
+        <div class="stars-bg"></div>
+        <div class="water-bg"></div>
+
+        <!-- Main Stone Wall Frame -->
+        <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
+
+        <!-- Interactive Center Door -->
+        <div class="door-container" onclick="enterDoor('davis.html')">
+            <img src="Door-Davis.png" alt="Davis.mov Entryway">
         </div>
 
-        <div id="flex">
-            <aside id="leftSidebar">
-                <h2>Updates</h2>
-                <div class="box">
-                    <p>Welcome to my site!</p>
-                </div>
-                <h2>Hi there!</h2>
-                <h3>Links</h3>
-                <ul>
-                    <li><a href="#">My Art</a></li>
-                    <li><a href="#">About Me</a></li>
-                </ul>
-            </aside>
-
-            <main>
-                <h1>Welcome to Davismov.net</h1>
-                <p>The Silence is a sound, I promise.</p>
-<img src="Fish (3840x2160).jpg" alt="Description of image" style="max-width: 100%;">
-
-            </main>
-
-            <aside id="rightSidebar">
-                <h2>Sidebar</h2>
-                <div class="box">
-                    <p>If the mind can't fix the mind, then what can? If I am not my mind then, who am I?.</p>
-                </div>
-            </aside>
-        </div>
-
-        <footer id="footer">davismov.net</footer>
+        <!-- Foreground Rocks Layer -->
+        <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
     </div>
+
+    <!-- Door Opening Sound Effect -->
+    <audio id="doorAudio" src="door-open.mp3" preload="auto"></audio>
+
+    <script>
+        function enterDoor(destination) {
+            var audio = document.getElementById("doorAudio");
+            
+            if (audio) {
+                audio.currentTime = 0;
+                audio.play().catch(function(e) { /* Audio fallback */ });
+            }
+
+            setTimeout(function() {
+                window.location.href = destination;
+            }, 600);
+        }
+    </script>
 
 </body>
 </html>
