@@ -72,10 +72,10 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 10vw; /* Covers Column A */
+            width: 10vw; /* Column A */
             height: 100%;
             background-color: #000000;
-            z-index: 9000; /* Above images, below grid overlay */
+            z-index: 9000; 
             pointer-events: none;
         }
 
@@ -83,14 +83,14 @@
             position: absolute;
             top: 0;
             right: 0;
-            width: 10vw; /* Covers Column J */
+            width: 10vw; /* Column J */
             height: 100%;
             background-color: #000000;
             z-index: 9000;
             pointer-events: none;
         }
 
-        /* STACK LAYER 1: Moon (Top Right Corner inside Column I/J area) */
+        /* STACK LAYER 1: Moon */
         .moon {
             position: absolute;
             top: 4vh;
@@ -101,7 +101,7 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 2: Water (Lowered to sit halfway through Row 7: 65%) */
+        /* STACK LAYER 2: Water */
         .water-bg {
             position: absolute;
             top: 65%; 
@@ -163,51 +163,82 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Left Leaf Cluster */
+        /* STACK LAYER 6: Left Leaf Cluster (Larger, Angled, Foreground Cut-Off) */
         .leaf-left {
             position: absolute;
-            bottom: -10vh; 
-            left: -2vw;
-            width: 36.4vw;
+            bottom: -14vh; 
+            left: -6vw; /* Partially cut off by column A mask */
+            width: 42vw; /* Scaled larger */
             height: auto;
             object-fit: contain;
-            z-index: 6;
+            z-index: 9001; /* Placed in front of side mask for true foreground depth */
             pointer-events: none;
+            transform: rotate(-15deg); /* Distinct foreground angle */
         }
 
-        /* STACK LAYER 6: Right Leaf Cluster */
+        /* STACK LAYER 6: Right Leaf Cluster (Differently Angled, Foreground Cut-Off) */
         .leaf-right {
             position: absolute;
-            bottom: -10vh; 
-            right: -2vw;
-            width: 36.4vw;
+            bottom: -12vh; 
+            right: -5vw; /* Partially cut off by column J mask */
+            width: 38vw;
             height: auto;
             object-fit: contain;
-            z-index: 6;
+            z-index: 9001; /* Placed in front of side mask */
             pointer-events: none;
-            transform: scaleX(-1);
+            transform: scaleX(-1) rotate(25deg); /* Mirror flipped & angled differently */
         }
 
-        /* MOBILE / PHONE SPECIFIC STYLES */
+        /* ========================================================= */
+        /* MOBILE / PORTRAIT SCREEN FIX (e.g. Galaxy Fold)          */
+        /* Locks door back into wall frame & eliminates floating gap */
+        /* ========================================================= */
         @media (max-width: 768px) or (max-aspect-ratio: 1/1) {
+            .side-mask-left, 
+            .side-mask-right {
+                width: 5vw; /* Shrink side black bars on narrow screens */
+            }
+
+            .moon {
+                height: 12vh;
+                top: 2vh;
+                right: 2vw;
+            }
+
+            /* Lock wall frame to upper-middle section */
             .wall-frame, 
             .foreground-rocks {
+                top: 15%;
                 width: 100vw;
                 height: auto;
             }
 
+            /* Lock door directly into the stone arch opening */
+            .door-container {
+                top: 36%;
+            }
+
             .door-container img {
-                width: 72vw;
+                width: 46vw;
                 height: auto;
             }
 
-            .door-container {
-                top: 50%;
+            /* Raise water line to meet base of rocks */
+            .water-bg {
+                top: 48%;
             }
 
-            .leaf-left, .leaf-right {
-                width: 48vw;
+            /* Mobile Foreground Leaves */
+            .leaf-left {
+                width: 55vw;
+                bottom: -6vh;
+                left: -10vw;
+            }
+
+            .leaf-right {
+                width: 52vw;
                 bottom: -5vh;
+                right: -8vw;
             }
         }
     </style>
@@ -222,7 +253,7 @@
         <!-- Moon in sky -->
         <img src="moon-dithered.png" alt="Moon" class="moon">
 
-        <!-- Tiled Dithered Water (Starts mid-Row 7) -->
+        <!-- Tiled Dithered Water -->
         <div class="water-bg"></div>
 
         <!-- Main Stone Wall Frame -->
@@ -236,10 +267,10 @@
         <!-- Foreground Rocks Layer -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
 
-        <!-- Left Leaves -->
+        <!-- Left Leaves (Foreground Layer, Angled & Cut-off) -->
         <img src="leafs-dithered.png" alt="Left Leaves" class="leaf-left">
 
-        <!-- Right Leaves -->
+        <!-- Right Leaves (Foreground Layer, Unique Angle & Cut-off) -->
         <img src="leafs-dithered.png" alt="Right Leaves" class="leaf-right">
     </div>
 
