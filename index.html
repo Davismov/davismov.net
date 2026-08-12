@@ -33,41 +33,19 @@
             background-color: #000000;
         }
 
-        /* BATTLESHIP GRID OVERLAY */
-        #viewport::before {
-            content: "";
+        /* STACK LAYER 1: Tiled Dithered Stars Background */
+        .stars-bg {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            z-index: 9999;
-            pointer-events: none;
-            background-image: 
-                linear-gradient(to right, rgba(255, 0, 0, 0.5) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 0, 0, 0.5) 1px, transparent 1px);
-            background-size: 10% 10%;
-            box-shadow: inset 0 0 0 2px rgba(255, 0, 0, 0.8);
+            height: 65%;
+            background: url('stars-dithered.gif') repeat;
+            background-size: 65px 65px;
+            z-index: 1;
         }
 
-        #viewport::after {
-            content: "A  \00a0\00a0 B  \00a0\00a0 C  \00a0\00a0 D  \00a0\00a0 E  \00a0\00a0 F  \00a0\00a0 G  \00a0\00a0 H  \00a0\00a0 I  \00a0\00a0 J";
-            position: absolute;
-            top: 5px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            color: #00ff00;
-            font-family: monospace;
-            font-weight: bold;
-            font-size: 16px;
-            z-index: 10000;
-            pointer-events: none;
-            text-shadow: 1px 1px 2px #000;
-        }
-
-        /* SOLID BLACK SIDE MASKS (z-index 9998 strictly crops leaves & wall) */
+        /* SOLID BLACK SIDE MASKS (Crops wall and leaves at borders) */
         .side-mask-left {
             position: absolute;
             top: 0;
@@ -90,7 +68,7 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 1: Moon */
+        /* STACK LAYER 1.5: Moon */
         .moon {
             position: absolute;
             top: 4vh;
@@ -163,10 +141,10 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Left Leaf Cluster */
+        /* STACK LAYER 6: Left Leaf Cluster (Lowered 40%) */
         .leaf-left {
             position: absolute;
-            bottom: -14vh; 
+            bottom: -54vh; 
             left: -6vw; 
             width: 48vw; 
             height: auto;
@@ -231,7 +209,7 @@
 
             .leaf-left {
                 width: 55vw;
-                bottom: -10vh;
+                bottom: -32vh;
                 left: -8vw;
             }
 
@@ -246,7 +224,10 @@
 <body>
 
     <div id="viewport">
-        <!-- Solid Black Side Crop Masks (Now cropping leaves cleanly) -->
+        <!-- Tiled Stars Sky Background -->
+        <div class="stars-bg"></div>
+
+        <!-- Solid Black Side Crop Masks -->
         <div class="side-mask-left"></div>
         <div class="side-mask-right"></div>
 
@@ -267,7 +248,7 @@
         <!-- Foreground Rocks Layer -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
 
-        <!-- Left Leaves -->
+        <!-- Left Leaves (Lowered 40%) -->
         <img src="leafs-dithered.png" alt="Left Leaves" class="leaf-left">
 
         <!-- Right Leaves -->
