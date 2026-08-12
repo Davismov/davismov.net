@@ -67,7 +67,30 @@
             text-shadow: 1px 1px 2px #000;
         }
 
-        /* STACK LAYER 1: Moon (Top Right Corner) */
+        /* SOLID BLACK SIDE MASKS (Crops Column A and Column J) */
+        .side-mask-left {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 10vw; /* Covers Column A */
+            height: 100%;
+            background-color: #000000;
+            z-index: 9000; /* Above images, below grid overlay */
+            pointer-events: none;
+        }
+
+        .side-mask-right {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 10vw; /* Covers Column J */
+            height: 100%;
+            background-color: #000000;
+            z-index: 9000;
+            pointer-events: none;
+        }
+
+        /* STACK LAYER 1: Moon (Top Right Corner inside Column I/J area) */
         .moon {
             position: absolute;
             top: 4vh;
@@ -78,10 +101,10 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 2: Water (Starts row 7 down to bottom row 10) */
+        /* STACK LAYER 2: Water (Lowered to sit halfway through Row 7: 65%) */
         .water-bg {
             position: absolute;
-            top: 60%; 
+            top: 65%; 
             bottom: 0;
             left: 0;
             width: 100%;
@@ -90,7 +113,7 @@
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Main Stone Archway Frame (B3 to B10) */
+        /* STACK LAYER 3: Main Stone Archway Frame */
         .wall-frame {
             position: absolute;
             top: 20%; 
@@ -140,7 +163,7 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Left Leaf Cluster (Scaled UP 30%) */
+        /* STACK LAYER 6: Left Leaf Cluster */
         .leaf-left {
             position: absolute;
             bottom: -10vh; 
@@ -152,7 +175,7 @@
             pointer-events: none;
         }
 
-        /* STACK LAYER 6: Right Leaf Cluster (Scaled UP 30%) */
+        /* STACK LAYER 6: Right Leaf Cluster */
         .leaf-right {
             position: absolute;
             bottom: -10vh; 
@@ -173,7 +196,6 @@
                 height: auto;
             }
 
-            /* Door scaled up 50% for phone view (48vw -> 72vw) */
             .door-container img {
                 width: 72vw;
                 height: auto;
@@ -193,10 +215,14 @@
 <body>
 
     <div id="viewport">
+        <!-- Solid Black Side Crop Columns (A & J) -->
+        <div class="side-mask-left"></div>
+        <div class="side-mask-right"></div>
+
         <!-- Moon in sky -->
         <img src="moon-dithered.png" alt="Moon" class="moon">
 
-        <!-- Tiled Dithered Water -->
+        <!-- Tiled Dithered Water (Starts mid-Row 7) -->
         <div class="water-bg"></div>
 
         <!-- Main Stone Wall Frame -->
@@ -210,10 +236,10 @@
         <!-- Foreground Rocks Layer -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
 
-        <!-- Left Leaves (Scaled UP 30%) -->
+        <!-- Left Leaves -->
         <img src="leafs-dithered.png" alt="Left Leaves" class="leaf-left">
 
-        <!-- Right Leaves (Scaled UP 30%) -->
+        <!-- Right Leaves -->
         <img src="leafs-dithered.png" alt="Right Leaves" class="leaf-right">
     </div>
 
