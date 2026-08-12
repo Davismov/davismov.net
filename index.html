@@ -63,7 +63,7 @@
             z-index: 2;
         }
 
-        /* STACK LAYER 3: Main Stone Archway Frame (Now Behind Door) */
+        /* STACK LAYER 3: Main Stone Archway Frame (Behind Door) */
         .wall-frame {
             position: absolute;
             top: 50%;
@@ -81,8 +81,7 @@
         .door-container {
             position: absolute;
             z-index: 4;
-            /* Shifted lower down to anchor base behind rocks */
-            top: 54%; 
+            top: 57%; 
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -91,8 +90,8 @@
 
         .door-container img {
             display: block;
-            /* Scaled UP to fill out the side gaps */
-            height: 73vh; 
+            /* Scaled UP by 25% (73vh -> 91vh) */
+            height: 91vh; 
             width: auto;
         }
 
