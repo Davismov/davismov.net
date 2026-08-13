@@ -10,7 +10,7 @@
         * {
             box-sizing: border-box;
             margin: 0;
-            padding: 0;
+            padding: 0px;
         }
 
         body, html {
@@ -102,22 +102,22 @@
 
         .moon {
             position: absolute;
-            top: 4vh;
-            right: 25vw;
+            top: 2vh;
+            right: 40vw;
             width: auto;
-            height: 18vh;
+            height: 12vh;
             z-index: 1;
             pointer-events: none;
         }
 
         .water-bg {
             position: absolute;
-            top: 65%; 
+            top: 59%;
             bottom: 0;
             left: 0;
             width: 100%;
             background: url('water-dithered.gif') repeat;
-            background-size: 64px 64px; 
+            background-size: 64px 64px;
             z-index: 2;
         }
 
@@ -137,7 +137,7 @@
         .door-container {
             position: absolute;
             z-index: 4;
-            top: 55%; 
+            top: 59%;
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
@@ -146,7 +146,7 @@
 
         .door-container img {
             display: block;
-            height: 80vh; 
+            height: 80vh;
             width: auto;
         }
 
@@ -170,26 +170,26 @@
 
         .leaf-left {
             position: absolute;
-            bottom: -54vh; 
-            left: -6vw; 
-            width: 48vw; 
+            bottom: -43vh;
+            left: -40vw;
+            width: 82vw;
             height: auto;
             object-fit: contain;
-            z-index: 6; 
+            z-index: 6;
             pointer-events: none;
-            transform: rotate(-15deg); 
+            transform: rotate(-15deg);
         }
 
         .leaf-right {
             position: absolute;
-            bottom: -12vh; 
-            right: -5vw; 
-            width: 44vw;
+            bottom: -12vh;
+            right: -5vw;
+            width: 48vw;
             height: auto;
             object-fit: contain;
-            z-index: 6; 
+            z-index: 6;
             pointer-events: none;
-            transform: scaleX(-1) rotate(25deg); 
+            transform: scaleX(-1) rotate(25deg);
         }
 
         /* ========================================================= */
