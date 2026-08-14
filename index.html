@@ -44,7 +44,6 @@
             left: 0;
             width: 100%;
             height: 65%;
-            /* Uses 'stars-dithered.gif' as base starry sky */
             background-image: url('stars-dithered.gif');
             background-repeat: repeat;
             background-size: 65px 65px;
@@ -67,7 +66,6 @@
             pointer-events: none;
         }
 
-        /* Fades shooting star layer in briefly once every 30 seconds */
         @keyframes rareShootingStar {
             0%, 94%, 100% {
                 opacity: 0;
@@ -191,7 +189,7 @@
             transform: scaleX(-1) rotate(25deg);
         }
 
-        /* Dark Room Overlay & Canvas Stage */
+        /* Complete Darkness Overlay */
         #darkness-room {
             position: fixed;
             top: 0;
@@ -205,10 +203,11 @@
             align-items: center;
         }
 
-        #clay-canvas {
-            max-width: 90vw;
-            max-height: 90vh;
+        #clay-gif {
+            max-width: 80vw;
+            max-height: 80vh;
             object-fit: contain;
+            display: block;
         }
 
         /* ========================================================= */
@@ -301,9 +300,9 @@
         <img src="leafs-dithered.png" alt="Right Leaves" class="leaf-right">
     </div>
 
-    <!-- Complete Darkness Room Overlay -->
+    <!-- Pitch Black Screen with Centered GIF -->
     <div id="darkness-room">
-        <canvas id="clay-canvas"></canvas>
+        <img id="clay-gif" src="" alt="Clay Face">
     </div>
 
     <!-- Audio Effect -->
@@ -317,49 +316,14 @@
                 audio.play().catch(function(e) {});
             }
 
-            // Reveal the pitch-black room container
             var room = document.getElementById("darkness-room");
+            var gifImage = document.getElementById("clay-gif");
+
+            // 1. Force the GIF to load from frame 1 by appending a unique timestamp
+            gifImage.src = "clayface.gif?t=" + new Date().getTime();
+
+            // 2. Display the dark room overlay
             room.style.display = "flex";
-
-            // Load and Play GIF once onto Canvas
-            // Note: Updated to 'Clay Face.gif' with capital letters
-            playGifOnce('Clay Face.gif', 'clay-canvas', 2500); 
-            // ^ Change '2500' to the exact length of your GIF in milliseconds (e.g. 3000 = 3 seconds)
-        }
-
-        function playGifOnce(gifSrc, canvasId, animationDurationMs) {
-            var canvas = document.getElementById(canvasId);
-            var ctx = canvas.getContext('2d');
-            var img = new Image();
-            
-            var startTime = null;
-            var animFrameId = null;
-
-            img.onload = function() {
-                canvas.width = img.naturalWidth || 800;
-                canvas.height = img.naturalHeight || 600;
-
-                function render(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    var elapsed = timestamp - startTime;
-
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                    if (elapsed < animationDurationMs) {
-                        animFrameId = requestAnimationFrame(render);
-                    } else {
-                        // Freeze animation loop on final frame state
-                        cancelAnimationFrame(animFrameId);
-                    }
-                }
-
-                // Force browser to start play animation from frame 1
-                img.src = gifSrc + '?t=' + new Date().getTime();
-                animFrameId = requestAnimationFrame(render);
-            };
-
-            img.src = gifSrc;
         }
     </script>
 
