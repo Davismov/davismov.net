@@ -44,14 +44,13 @@
             left: 0;
             width: 100%;
             height: 65%;
-            /* Uses 'stars-dithered.gif' as base starry sky */
             background-image: url('stars-dithered.gif');
             background-repeat: repeat;
             background-size: 65px 65px;
             z-index: 1;
         }
 
-        /* Shooting Star Overlay (URL-encoded space fix: '%20') */
+        /* Shooting Star Overlay */
         .stars-bg::after {
             content: "";
             position: absolute;
@@ -59,7 +58,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* %20 handles spaces in file names safely on web servers */
             background-image: url('no%20shooting%20star-dithered.gif');
             background-repeat: repeat;
             background-size: 130px 130px;
@@ -68,7 +66,6 @@
             pointer-events: none;
         }
 
-        /* Fades shooting star layer in briefly once every 30 seconds */
         @keyframes rareShootingStar {
             0%, 94%, 100% {
                 opacity: 0;
@@ -192,6 +189,26 @@
             transform: scaleX(-1) rotate(25deg);
         }
 
+        /* Dark Room Overlay & Canvas Stage */
+        #darkness-room {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #000000;
+            z-index: 99999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #clay-canvas {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
         /* ========================================================= */
         /* 2. PHONE STYLES ONLY                                      */
         /* ========================================================= */
@@ -268,7 +285,7 @@
         <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
 
         <!-- Interactive Center Door -->
-        <div class="door-container" onclick="enterDoor('davis.html')">
+        <div class="door-container" onclick="openDoor()">
             <img src="Door-Davis.png" alt="Davis.mov Entryway">
         </div>
 
@@ -282,21 +299,64 @@
         <img src="leafs-dithered.png" alt="Right Leaves" class="leaf-right">
     </div>
 
+    <!-- Complete Darkness Room Overlay -->
+    <div id="darkness-room">
+        <canvas id="clay-canvas"></canvas>
+    </div>
+
     <!-- Audio Effect -->
     <audio id="doorAudio" src="door-open.mp3" preload="auto"></audio>
 
     <script>
-        function enterDoor(destination) {
+        function openDoor() {
             var audio = document.getElementById("doorAudio");
-            
             if (audio) {
                 audio.currentTime = 0;
-                audio.play().catch(function(e) { /* Audio fallback */ });
+                audio.play().catch(function(e) {});
             }
 
-            setTimeout(function() {
-                window.location.href = destination;
-            }, 600);
+            // Show Darkness Room
+            var room = document.getElementById("darkness-room");
+            room.style.display = "flex";
+
+            // Load and Play GIF once onto Canvas
+            playGifOnce('clay face.gif', 'clay-canvas', 2500); 
+            // NOTE: Replace '2500' above with the exact length of your GIF in milliseconds (e.g. 3000 = 3 seconds)
+        }
+
+        function playGifOnce(gifSrc, canvasId, animationDurationMs) {
+            var canvas = document.getElementById(canvasId);
+            var ctx = canvas.getContext('2d');
+            var img = new Image();
+            
+            var startTime = null;
+            var animFrameId = null;
+
+            img.onload = function() {
+                canvas.width = img.naturalWidth || 800;
+                canvas.height = img.naturalHeight || 600;
+
+                function render(timestamp) {
+                    if (!startTime) startTime = timestamp;
+                    var elapsed = timestamp - startTime;
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                    if (elapsed < animationDurationMs) {
+                        animFrameId = requestAnimationFrame(render);
+                    } else {
+                        // Freeze on final state
+                        cancelAnimationFrame(animFrameId);
+                    }
+                }
+
+                // Append timestamp query parameter to force fresh GIF playback start
+                img.src = gifSrc + '?t=' + new Date().getTime();
+                animFrameId = requestAnimationFrame(render);
+            };
+
+            img.src = gifSrc;
         }
     </script>
 
