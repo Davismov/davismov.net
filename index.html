@@ -44,6 +44,7 @@
             left: 0;
             width: 100%;
             height: 65%;
+            /* Uses 'stars-dithered.gif' as base starry sky */
             background-image: url('stars-dithered.gif');
             background-repeat: repeat;
             background-size: 65px 65px;
@@ -66,6 +67,7 @@
             pointer-events: none;
         }
 
+        /* Fades shooting star layer in briefly once every 30 seconds */
         @keyframes rareShootingStar {
             0%, 94%, 100% {
                 opacity: 0;
@@ -315,13 +317,14 @@
                 audio.play().catch(function(e) {});
             }
 
-            // Show Darkness Room
+            // Reveal the pitch-black room container
             var room = document.getElementById("darkness-room");
             room.style.display = "flex";
 
             // Load and Play GIF once onto Canvas
-            playGifOnce('clay face.gif', 'clay-canvas', 2500); 
-            // NOTE: Replace '2500' above with the exact length of your GIF in milliseconds (e.g. 3000 = 3 seconds)
+            // Note: Updated to 'Clay Face.gif' with capital letters
+            playGifOnce('Clay Face.gif', 'clay-canvas', 2500); 
+            // ^ Change '2500' to the exact length of your GIF in milliseconds (e.g. 3000 = 3 seconds)
         }
 
         function playGifOnce(gifSrc, canvasId, animationDurationMs) {
@@ -346,12 +349,12 @@
                     if (elapsed < animationDurationMs) {
                         animFrameId = requestAnimationFrame(render);
                     } else {
-                        // Freeze on final state
+                        // Freeze animation loop on final frame state
                         cancelAnimationFrame(animFrameId);
                     }
                 }
 
-                // Append timestamp query parameter to force fresh GIF playback start
+                // Force browser to start play animation from frame 1
                 img.src = gifSrc + '?t=' + new Date().getTime();
                 animFrameId = requestAnimationFrame(render);
             };
