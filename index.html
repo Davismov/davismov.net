@@ -302,7 +302,7 @@
 
     <!-- Pitch Black Screen with Centered GIF -->
     <div id="darkness-room">
-        <img id="clay-gif" src="" alt="Clay Face">
+        <img id="clay-gif" src="clayface.gif" alt="Clay Face">
     </div>
 
     <!-- Audio Effect -->
@@ -319,10 +319,11 @@
             var room = document.getElementById("darkness-room");
             var gifImage = document.getElementById("clay-gif");
 
-            // 1. Force the GIF to load from frame 1 by appending a unique timestamp
-            gifImage.src = "clayface.gif?t=" + new Date().getTime();
+            // Reset image src to ensure clean playback reload
+            gifImage.src = "";
+            gifImage.src = "clayface.gif";
 
-            // 2. Display the dark room overlay
+            // Show the dark room
             room.style.display = "flex";
         }
     </script>
