@@ -24,7 +24,6 @@
             font-family: 'Times New Roman', serif;
         }
 
-        /* Viewport Box */
         #viewport {
             position: relative;
             width: 100vw;
@@ -33,11 +32,6 @@
             background-color: #000000;
         }
 
-        /* ========================================================= */
-        /* 1. DESKTOP STYLES (DEFAULT)                               */
-        /* ========================================================= */
-
-        /* STACK LAYER 1: Base Tiled Sky */
         .stars-bg {
             position: absolute;
             top: 0;
@@ -50,7 +44,6 @@
             z-index: 1;
         }
 
-        /* Shooting Star Overlay */
         .stars-bg::after {
             content: "";
             position: absolute;
@@ -189,7 +182,6 @@
             transform: scaleX(-1) rotate(25deg);
         }
 
-        /* Complete Darkness Overlay */
         #darkness-room {
             position: fixed;
             top: 0;
@@ -210,9 +202,6 @@
             display: block;
         }
 
-        /* ========================================================= */
-        /* 2. PHONE STYLES ONLY                                      */
-        /* ========================================================= */
         @media (max-width: 768px) {
             #viewport {
                 height: 100%;
@@ -269,46 +258,39 @@
 <body>
 
     <div id="viewport">
-        <!-- Background Stars -->
         <div class="stars-bg"></div>
 
-        <!-- Solid Black Side Crop Masks -->
         <div class="side-mask-left"></div>
         <div class="side-mask-right"></div>
 
-        <!-- Moon -->
         <img src="moon-dithered.png" alt="Moon" class="moon">
 
-        <!-- Water -->
         <div class="water-bg"></div>
 
-        <!-- Main Stone Wall Frame -->
         <img src="rockwall.png" alt="Stone Wall" class="wall-frame">
 
-        <!-- Interactive Center Door -->
         <div class="door-container" onclick="openDoor()">
             <img src="Door-Davis.png" alt="Davis.mov Entryway">
         </div>
 
-        <!-- Foreground Rocks Layer -->
         <img src="rocks.png" alt="Foreground Rocks" class="foreground-rocks">
 
-        <!-- Left Leaves -->
         <img src="leafs-dithered.png" alt="Left Leaves" class="leaf-left">
 
-        <!-- Right Leaves -->
         <img src="leafs-dithered.png" alt="Right Leaves" class="leaf-right">
     </div>
 
-    <!-- Pitch Black Screen with Centered GIF -->
     <div id="darkness-room">
         <img id="clay-gif" src="clayface.gif" alt="Clay Face">
     </div>
 
-    <!-- Audio Effect -->
     <audio id="doorAudio" src="door-open.mp3" preload="auto"></audio>
 
     <script>
+        // How long the clayface.gif animation actually runs, in milliseconds.
+        // Set this to match your GIF's real duration (frame count x frame delay).
+        var CLAY_GIF_DURATION_MS = 2500;
+
         function openDoor() {
             var audio = document.getElementById("doorAudio");
             if (audio) {
@@ -319,12 +301,14 @@
             var room = document.getElementById("darkness-room");
             var gifImage = document.getElementById("clay-gif");
 
-            // Reset image src to ensure clean playback reload
-            gifImage.src = "";
-            gifImage.src = "clayface.gif";
+            gifImage.src = "clayface.gif?" + Date.now();
 
-            // Show the dark room
             room.style.display = "flex";
+
+            clearTimeout(window._clayFreezeTimer);
+            window._clayFreezeTimer = setTimeout(function() {
+                gifImage.src = "clayface-final-frame.png";
+            }, CLAY_GIF_DURATION_MS);
         }
     </script>
 
